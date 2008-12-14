@@ -1,20 +1,20 @@
-%define module networkx
-%define name python-%{module}
-%define version 0.36
-%define release %mkrel 1
+%define module	networkx
+%define name	python-%{module}
+%define version	0.99
+%define release	%mkrel 1
 
-Summary: Python package for the study of complex networks
-Name: %{name}
-Version: %{version}
-Release: %{release}
-Source0: %{module}-%{version}.tar.lzma
-License: LGPLv2.1
-Group: Development/Python
-Url: https://networkx.lanl.gov/
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Requires: python-pygraphviz, python-matplotlib >= 0.73.1
-BuildRequires: python-devel
-BuildArch: noarch
+Summary: 	Python package for the study of complex networks
+Name: 	 	%{name}
+Version: 	%{version}
+Release: 	%{release}
+Source0: 	%{module}-%{version}.zip
+License: 	LGPLv2.1
+Group: 	 	Development/Python
+Url: 	 	https://networkx.lanl.gov/
+BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+Requires: 	python-pygraphviz, python-matplotlib >= 0.73.1
+BuildRequires: 	python-devel
+BuildArch: 	noarch
 
 %description
 NetworkX (NX) is a Python package for the creation, manipulation, and
