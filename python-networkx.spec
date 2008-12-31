@@ -1,7 +1,7 @@
 %define module	networkx
 %define name	python-%{module}
 %define version	0.99
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 Summary: 	Python package for the study of complex networks
 Name: 	 	%{name}
@@ -12,8 +12,10 @@ License: 	LGPLv2.1
 Group: 	 	Development/Python
 Url: 	 	https://networkx.lanl.gov/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Requires: 	python-pygraphviz, python-matplotlib >= 0.73.1
-BuildRequires: 	python-devel
+Requires: 	python-pygraphviz
+Requires: 	python-matplotlib >= 0.73.1
+%{py_requires -d}
+BuildRequires: 	python-setuptools
 BuildArch: 	noarch
 
 %description
@@ -39,12 +41,15 @@ Features:
 
 %install
 %__rm -rf %{buildroot}
-%__python setup.py install --root=%{buildroot} --record=FILELIST
+%__python setup.py install --root=%{buildroot}
+rm -rf %{buildroot}%{_docdir}
 
 %clean
 %__rm -rf %{buildroot}
 
-%files -f FILELIST
+%files
 %defattr(-,root,root)
-%doc doc/*
+%{py_puresitedir}/%{module}
+%{py_puresitedir}/%{module}-%{version}-py%{pyver}.egg-info
+%doc doc/* examples/
 
