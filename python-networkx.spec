@@ -1,14 +1,14 @@
 %define module	networkx
 %define name	python-%{module}
-%define version	0.99
-%define release	%mkrel 3
+%define version	1.0.1
+%define release	%mkrel 1
 
 Summary: 	Python package for the study of complex networks
 Name: 	 	%{name}
 Version: 	%{version}
 Release: 	%{release}
-Source0: 	%{module}-%{version}.zip
-License: 	LGPLv2.1
+Source0: 	%{module}-%{version}.tar.gz
+License: 	BSD
 Group: 	 	Development/Python
 Url: 	 	https://networkx.lanl.gov/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -36,8 +36,6 @@ Features:
 
 %prep
 %setup -q -n %{module}-%{version}
-
-%build
 
 %install
 %__rm -rf %{buildroot}
