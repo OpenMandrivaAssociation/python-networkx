@@ -1,6 +1,6 @@
 %define module	networkx
 %define name	python-%{module}
-%define version	1.0.1
+%define version	1.1
 %define release	%mkrel 1
 
 Summary: 	Python package for the study of complex networks
@@ -39,8 +39,8 @@ Features:
 
 %install
 %__rm -rf %{buildroot}
-%__python setup.py install --root=%{buildroot}
-rm -rf %{buildroot}%{_docdir}
+PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot}
+%__rm -rf %{buildroot}%{_docdir}
 
 %clean
 %__rm -rf %{buildroot}
