@@ -1,6 +1,6 @@
 %define module	networkx
 %define name	python-%{module}
-%define version	1.1
+%define version	1.2
 %define release	%mkrel 1
 
 Summary: 	Python package for the study of complex networks
@@ -14,6 +14,8 @@ Url: 	 	https://networkx.lanl.gov/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires: 	python-pygraphviz
 Requires: 	python-matplotlib >= 0.73.1
+Suggests:	python-pyparsing
+Suggests:	python-numpy, python-scipy
 %{py_requires -d}
 BuildRequires: 	python-setuptools
 BuildArch: 	noarch
