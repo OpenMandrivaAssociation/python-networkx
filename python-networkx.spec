@@ -1,7 +1,7 @@
 %define module	networkx
 %define name	python-%{module}
 %define version	1.3
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 Summary: 	Python package for the study of complex networks
 Name: 	 	%{name}
