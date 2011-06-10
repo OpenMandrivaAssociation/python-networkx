@@ -1,6 +1,6 @@
 %define module	networkx
 %define name	python-%{module}
-%define version	1.4
+%define version	1.5
 %define release	%mkrel 1
 
 Summary: 	Python package for the study of complex networks
@@ -12,13 +12,13 @@ License: 	BSD
 Group: 	 	Development/Python
 Url: 	 	https://networkx.lanl.gov/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildArch: 	noarch
 Requires: 	python-pygraphviz
 Requires: 	python-matplotlib >= 0.73.1
 Suggests:	python-pyparsing
-Suggests:	python-numpy, python-scipy
+Suggests:	python-numpy, python-scipy, python-yaml
+BuildRequires: 	python-setuptools, python-sphinx
 %{py_requires -d}
-BuildRequires: 	python-setuptools
-BuildArch: 	noarch
 
 %description
 NetworkX (NX) is a Python package for the creation, manipulation, and
@@ -41,15 +41,15 @@ Features:
 
 %install
 %__rm -rf %{buildroot}
-PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot}
-%__rm -rf %{buildroot}%{_docdir}
+PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot} --record=FILE_LIST
+pushd doc
+export PYTHONPATH=`dir -d ../build/lib*`
+make html
+popd
 
 %clean
 %__rm -rf %{buildroot}
 
-%files
+%files -f FILE_LIST
 %defattr(-,root,root)
-%{py_puresitedir}/%{module}
-%{py_puresitedir}/%{module}-%{version}-py%{pyver}.egg-info
-%doc doc/* examples/
-
+%doc examples/ doc/build/html
