@@ -17,7 +17,7 @@ Requires: 	python-pygraphviz
 Requires: 	python-matplotlib >= 0.73.1
 Suggests:	python-pyparsing
 Suggests:	python-numpy, python-scipy, python-yaml
-BuildRequires: 	python-setuptools, python-sphinx
+BuildRequires: 	python-setuptools, python-sphinx, python-matplotlib
 %{py_requires -d}
 
 %description
