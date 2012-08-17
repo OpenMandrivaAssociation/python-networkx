@@ -1,13 +1,18 @@
 %define module	networkx
 %define name	python-%{module}
-%define version	1.6
-%define release	%mkrel 1
+%define version	1.7
+%define rel		1
+%if %mdkversion < 201100
+%define release	%mkrel %{rel}
+%else
+%define	release	%{rel}
+%endif
 
 Summary: 	Python package for the study of complex networks
 Name: 	 	%{name}
 Version: 	%{version}
 Release: 	%{release}
-Source0: 	%{module}-%{version}.tar.gz
+Source0:	http://pypi.python.org/packages/source/n/%{module}/%{module}-%{version}.tar.gz
 License: 	BSD
 Group: 	 	Development/Python
 Url: 	 	https://networkx.lanl.gov/
@@ -41,15 +46,17 @@ Features:
 
 %install
 %__rm -rf %{buildroot}
-PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot} --record=FILE_LIST
+PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot}
 pushd doc
 export PYTHONPATH=`dir -d ../build/lib*`
 make html
 popd
+rm -rf %{buildroot}%{_datadir}/doc/%{module}-%{version}
 
 %clean
 %__rm -rf %{buildroot}
 
-%files -f FILE_LIST
+%files
 %defattr(-,root,root)
-%doc examples/ doc/build/html
+%doc *.txt examples/ doc/build/html
+%py_sitedir/%{module}*
