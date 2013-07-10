@@ -17,6 +17,11 @@ Suggests:	python-pyparsing
 Suggests:	python-numpy
 Suggests:   python-scipy
 Suggests:   python-yaml
+
+# FIXME not a proper build breakage solution but good until properly
+# fixed in python-matplotib
+BuildRequires:	fonts-ttf-dejavu
+
 BuildRequires: 	python-parsing
 BuildRequires: 	python-setuptools
 BuildRequires: 	python-sphinx
