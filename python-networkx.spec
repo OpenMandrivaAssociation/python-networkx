@@ -1,10 +1,12 @@
 %define module	networkx
+%bcond_without	pdf_doc
 
 Summary: 	Python package for the study of complex networks
 Name: 	 	python-%{module}
 Version: 	1.7
 Release: 	2
 Source0:	http://pypi.python.org/packages/source/n/%{module}/%{module}-%{version}.tar.gz
+Source1:	%{name}.rpmlintrc
 License: 	BSD
 Group: 	 	Development/Python
 Url: 	 	https://networkx.lanl.gov/
@@ -15,11 +17,16 @@ Suggests:	python-pyparsing
 Suggests:	python-numpy
 Suggests:   python-scipy
 Suggests:   python-yaml
+BuildRequires: 	python-parsing
 BuildRequires: 	python-setuptools
 BuildRequires: 	python-sphinx
 BuildRequires: 	python-matplotlib
 BuildRequires: 	pkgconfig(lapack)
 %{py_requires -d}
+%if %{with_pdf_doc}
+BuildRequires:	texlive
+BuildRequires:	zip
+%endif
 
 %description
 NetworkX (NX) is a Python package for the creation, manipulation, and
@@ -44,12 +51,22 @@ Features:
 PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot}
 pushd doc
 export PYTHONPATH=`dir -d ../build/lib*`
+%if %{with_pdf_doc}
+make dist
+%else
 make html
+%endif
+find . -name .buildinfo | xargs rm
 popd
 rm -rf %{buildroot}%{_datadir}/doc/%{module}-%{version}
 
 %files
-%doc *.txt examples/ doc/build/html
+%doc *.txt examples/
+%if %{with_pdf_doc}
+%doc doc/build/dist
+%else
+%doc doc/build/html
+%endif
 %py_sitedir/%{module}*
 
 
