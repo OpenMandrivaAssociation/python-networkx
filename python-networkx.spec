@@ -3,9 +3,9 @@
 
 Summary: 	Python package for the study of complex networks
 Name: 	 	python-%{module}
-Version: 	1.7
-Release: 	2
-Source0:	http://pypi.python.org/packages/source/n/%{module}/%{module}-%{version}.tar.gz
+Version: 	1.8.1
+Release: 	1
+Source0:	http://pypi.python.org/packages/source/n/networkx/networkx-%{version}.tar.gz
 Source1:	%{name}.rpmlintrc
 License: 	BSD
 Group: 	 	Development/Python
@@ -72,7 +72,7 @@ rm -rf %{buildroot}%{_datadir}/doc/%{module}-%{version}
 %else
 %doc doc/build/html
 %endif
-%py_sitedir/%{module}*
+%py_puresitedir/%{module}*
 
 
 %changelog
@@ -133,3 +133,4 @@ rm -rf %{buildroot}%{_datadir}/doc/%{module}-%{version}
 
 * Mon Jul 7 2008 Lev Givon <lev@mandriva.org> 0.36-1mdv2008.1
 - Package for Mandriva.
+

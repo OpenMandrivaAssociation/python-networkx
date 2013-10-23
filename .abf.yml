@@ -1,2 +1,4 @@
+removed_sources:
+  networkx-1.7.tar.gz: 1a83dbbac6fb4abc6bfd644ae3c4a6af8ebb1c33
 sources:
-  "networkx-1.7.tar.gz": 1a83dbbac6fb4abc6bfd644ae3c4a6af8ebb1c33
+  networkx-1.8.1.tar.gz: d6c1524724d3e47f7621bb2072863463924bfb99
