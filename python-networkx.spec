@@ -13,7 +13,7 @@ Url: 	 	https://networkx.lanl.gov/
 BuildArch: 	noarch
 Requires: 	python-pygraphviz
 Requires: 	python-matplotlib >= 0.73.1
-Suggests:	python-pyparsing
+Suggests:	python-parsing
 Suggests:	python-numpy
 Suggests:   python-scipy
 Suggests:   python-yaml
