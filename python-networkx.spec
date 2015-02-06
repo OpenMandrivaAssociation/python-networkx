@@ -4,7 +4,7 @@
 Summary: 	Python package for the study of complex networks
 Name: 	 	python-%{module}
 Version: 	1.8.1
-Release: 	1
+Release: 	2
 Source0:	http://pypi.python.org/packages/source/n/networkx/networkx-%{version}.tar.gz
 Source1:	%{name}.rpmlintrc
 License: 	BSD
