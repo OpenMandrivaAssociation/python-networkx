@@ -29,6 +29,7 @@ BuildRequires: 	python2-sphinx
 BuildRequires: 	python2-matplotlib
 BuildRequires: 	pkgconfig(lapack)
 BuildRequires: 	python2-devel
+BuildRequires:	python2-numpy-devel
 
 %if %{with pdf_doc}
 BuildRequires:	texlive
