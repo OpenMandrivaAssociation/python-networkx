@@ -1,5 +1,5 @@
 %define module	networkx
-%bcond_without	pdf_doc
+%bcond_with	pdf_doc
 
 Summary: 	Python package for the study of complex networks
 Name: 	 	python2-%{module}
@@ -65,7 +65,7 @@ export PYTHON=%__python2
 %if %{with pdf_doc}
 make dist SPHINXBUILD=sphinx-build2
 %else
-SPHINXBUILD=sphinx-build2 make html
+make html SPHINXBUILD=sphinx-build2
 %endif
 find . -name .buildinfo | xargs rm
 popd
