@@ -1,82 +1,92 @@
-%define module	networkx
-%bcond_with	pdf_doc
+%global srcname networkx
 
-Summary: 	Python package for the study of complex networks
-Name: 	 	python2-%{module}
-Version: 	1.8.1
-Release: 	3
-Source0:	http://pypi.python.org/packages/source/n/networkx/networkx-%{version}.tar.gz
-Source1:	%{name}.rpmlintrc
-License: 	BSD
-Group: 	 	Development/Python
-Url: 	 	https://networkx.lanl.gov/
-BuildArch: 	noarch
-Requires: 	python2-pygraphviz
-Requires: 	python2-matplotlib >= 0.73.1
-Suggests:	python2-parsing
-Suggests:	python2-numpy
-Suggests:   python2-scipy
-Suggests:   python2-yaml
-%rename 	python-networkx
+Name:           python-%{srcname}
+Version:        2.3
+Release:        2%{?dist}
+Summary:        Creates and Manipulates Graphs and Networks
+License:        BSD
+URL:            http://networkx.github.io/
+Source0:        https://github.com/networkx/networkx/archive/%{srcname}-%{version}.tar.gz
+BuildArch:      noarch
 
-# FIXME not a proper build breakage solution but good until properly
-# fixed in python-matplotib
-BuildRequires:	fonts-ttf-dejavu
-
-BuildRequires: 	python2-parsing
-BuildRequires: 	python2-setuptools
-BuildRequires: 	python2-sphinx
-BuildRequires: 	python2-matplotlib
-BuildRequires: 	pkgconfig(lapack)
-BuildRequires: 	python2-devel
-BuildRequires:	python2-numpy-devel
-
-%if %{with pdf_doc}
-BuildRequires:	texlive
-BuildRequires:	zip
-%endif
+BuildRequires:  python3-devel
+BuildRequires:  python3dist(decorator)
+BuildRequires:  python3dist(gdal)
+BuildRequires:  python3dist(lxml)
+BuildRequires:  python3dist(matplotlib)
+BuildRequires:  python3dist(nose)
+BuildRequires:  python3dist(numpy)
+BuildRequires:  python3dist(numpydoc)
+BuildRequires:  python3dist(pillow)
+BuildRequires:  python3dist(pyyaml)
+BuildRequires:  python3dist(setuptools)
+BuildRequires:  xdg-utils
 
 %description
-NetworkX (NX) is a Python package for the creation, manipulation, and
+NetworkX is a Python package for the creation, manipulation, and
 study of the structure, dynamics, and functions of complex networks.
 
-Features:
-* Includes standard graph-theoretic and statistical physics functions
-* Easy exchange of network algorithms between applications, disciplines, 
-  and platforms
-* Includes many classic graphs and synthetic networks
-* Nodes and edges can be "anything" (e.g. time-series, text, images, 
-  XML records)
-* Exploits existing code from high-quality legacy software in C, C++, 
-  Fortran, etc.
-* Open source (encourages community input)
-* Unit-tested
+%package -n python3-%{srcname}
+Summary:        Creates and Manipulates Graphs and Networks
+Recommends:     python3dist(gdal)
+Recommends:     python3dist(lxml)
+Recommends:     python3dist(matplotlib)
+Recommends:     python3dist(numpy)
+Recommends:     python3dist(pillow)
+Recommends:     python3dist(pyparsing)
+Recommends:     python3dist(pyyaml)
+Recommends:     xdg-utils
+Provides:	python-%{srcname} = %{EVRD}
+
+%description -n python3-%{srcname}
+NetworkX is a Python 3 package for the creation, manipulation, and
+study of the structure, dynamics, and functions of complex networks.
 
 %prep
-%setup -q -n %{module}-%{version}
+%autosetup -p0 -n %{srcname}-%{srcname}-%{version}
 
-sed -i 's#python#python2#' doc/Makefile doc/*.py
+# Do not use env
+for f in $(grep -FRl %{_bindir}/env .); do
+  sed -e 's,%{_bindir}/env python,%{__python3},' \
+      -e 's,%{_bindir}/env ,%{_bindir},' \
+      -i.orig $f
+  touch -r $f.orig $f
+  rm $f.orig
+done
+
+# The football example requires network access, and the parallel betweenness
+# example has a function that cannot be pickled.
+sed -i "/expected_failing_examples/s|]|,'../examples/advanced/plot_parallel_betweenness.py','../examples/graph/plot_football.py'&|" doc/conf.py
+
+%build
+%py3_build
 
 %install
-PYTHONDONTWRITEBYTECODE= %__python2 setup.py install --root=%{buildroot}
-pushd doc
-export PYTHONPATH=`dir -d ../build/lib*`
-export PYTHON=%__python2
-%if %{with pdf_doc}
-make dist SPHINXBUILD=sphinx-build2
-%else
-make html SPHINXBUILD=sphinx-build2
-%endif
-find . -name .buildinfo | xargs rm
-popd
-rm -rf %{buildroot}%{_datadir}/doc/%{module}-%{version}
+%py3_install
+mv %{buildroot}%{_docdir}/networkx-%{version} ./installed-docs
+rm -f installed-docs/INSTALL.txt
 
-%files
-%doc *.txt examples/
-%if %{with pdf_doc}
-%doc doc/build/dist
-%else
-%doc doc/build/html
-%endif
-%{py2_puresitedir}/%{module}*
+# Repack uncompressed zip archives
+for fil in $(find doc/build -name \*.zip); do
+  mkdir zip
+  cd zip
+  unzip ../$fil
+  zip -9r ../$fil .
+  cd ..
+  rm -fr zip
+done
 
+# The tests have shebangs, so mark them as executable
+grep -rlZ '^#!' %{buildroot}%{python3_sitelib}/networkx | xargs -0 chmod a+x
+
+# Temporarily disabled until a bug in graphviz > 2.38 is fixed that causes
+# multigraphs to not work.  (Adding the same edge with multiple keys yields
+# only the initial edge; see bz 1703571).  This is slated to be fixed in
+# graphviz 2.42.  Once that is built for Fedora, we can reenable the tests.
+#%%check
+#nosetests-3 -v
+
+%files -n python3-networkx
+%doc README.rst installed-docs/*
+%license LICENSE.txt
+%{python3_sitelib}/networkx*
