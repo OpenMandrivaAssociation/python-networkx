@@ -1,8 +1,8 @@
 %global srcname networkx
 
 Name:           python-%{srcname}
-Version:        2.3
-Release:        3%{?dist}
+Version:	2.4
+Release:	1
 Summary:        Creates and Manipulates Graphs and Networks
 License:        BSD
 URL:            http://networkx.github.io/
