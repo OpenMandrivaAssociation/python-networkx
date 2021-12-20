@@ -1,7 +1,7 @@
 %global srcname networkx
 
 Name:           python-%{srcname}
-Version:	2.4
+Version:	2.6.3
 Release:	1
 Summary:        Creates and Manipulates Graphs and Networks
 License:        BSD
@@ -77,7 +77,7 @@ for fil in $(find doc/build -name \*.zip); do
 done
 
 # The tests have shebangs, so mark them as executable
-grep -rlZ '^#!' %{buildroot}%{python3_sitelib}/networkx | xargs -0 chmod a+x
+#grep -rlZ '^#!' %{buildroot}%{python3_sitelib}/networkx | xargs -0 chmod a+x
 
 # Temporarily disabled until a bug in graphviz > 2.38 is fixed that causes
 # multigraphs to not work.  (Adding the same edge with multiple keys yields
