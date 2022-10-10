@@ -1,49 +1,59 @@
-%global srcname networkx
+%global module networkx
+%global fname %(n=%{module}; echo ${n:0:1})
 
-Name:           python-%{srcname}
-Version:	2.6.3
+Name:		python-%{module}
+Version:	2.8.7
 Release:	1
-Summary:        Creates and Manipulates Graphs and Networks
-License:        BSD
-URL:            http://networkx.github.io/
-Source0:        https://github.com/networkx/networkx/archive/%{srcname}-%{version}.tar.gz
-BuildArch:      noarch
+Summary:	Creates and Manipulates Graphs and Networks
+License:	BSD
+URL:		http://networkx.github.io/
+#Source0:	https://github.com/networkx/networkx/archive/%{module}-%{version}.tar.gz
+Source0:	https://pypi.io/packages/source/%{fname}/%{module}/%{module}-%{version}.tar.gz
 
-BuildRequires:  python3-devel
-BuildRequires:  python3dist(decorator)
-BuildRequires:  python3dist(gdal)
-BuildRequires:  python3dist(lxml)
-BuildRequires:  python3dist(matplotlib)
-BuildRequires:  python3dist(nose)
-BuildRequires:  python3dist(numpy)
-BuildRequires:  python3dist(numpydoc)
-BuildRequires:  python3dist(pillow)
-BuildRequires:  python3dist(pyyaml)
-BuildRequires:  python3dist(setuptools)
-BuildRequires:  xdg-utils
+BuildArch:	noarch
+
+BuildRequires:	python3-devel
+BuildRequires:	python3dist(decorator)
+BuildRequires:	python3dist(gdal)
+BuildRequires:	python3dist(lxml)
+BuildRequires:	python3dist(matplotlib)
+BuildRequires:	python3dist(nose)
+BuildRequires:	python3dist(numpy)
+BuildRequires:	python3dist(numpydoc)
+BuildRequires:	python3dist(pillow)
+BuildRequires:	python3dist(pyyaml)
+BuildRequires:	python3dist(setuptools)
+BuildRequires:	xdg-utils
 
 %description
 NetworkX is a Python package for the creation, manipulation, and
 study of the structure, dynamics, and functions of complex networks.
 
-%package -n python3-%{srcname}
-Summary:        Creates and Manipulates Graphs and Networks
-Recommends:     python3dist(gdal)
-Recommends:     python3dist(lxml)
-Recommends:     python3dist(matplotlib)
-Recommends:     python3dist(numpy)
-Recommends:     python3dist(pillow)
-Recommends:     python3dist(pyparsing)
-Recommends:     python3dist(pyyaml)
-Recommends:     xdg-utils
-Provides:	python-%{srcname} = %{EVRD}
+%package -n python3-%{module}
+Summary:	Creates and Manipulates Graphs and Networks
+Recommends:	python3dist(gdal)
+Recommends:	python3dist(lxml)
+Recommends:	python3dist(matplotlib)
+Recommends:	python3dist(numpy)
+Recommends:	python3dist(pillow)
+Recommends:	python3dist(pyparsing)
+Recommends:	python3dist(pyyaml)
+Recommends:	xdg-utils
+Provides:	python-%{module} = %{EVRD}
 
-%description -n python3-%{srcname}
+%description -n python3-%{module}
 NetworkX is a Python 3 package for the creation, manipulation, and
 study of the structure, dynamics, and functions of complex networks.
 
+%files -n python3-networkx
+%doc README.rst installed-docs/*
+%license LICENSE.txt
+%{python3_sitelib}/networkx*
+
+#---------------------------------------------------------------------------
+
 %prep
-%autosetup -p0 -n %{srcname}-%{srcname}-%{version}
+%autosetup -p1 -n %{module}-%{version}
 
 # Do not use env
 for f in $(grep -FRl %{_bindir}/env .); do
@@ -59,10 +69,10 @@ done
 sed -i "/expected_failing_examples/s|]|,'../examples/advanced/plot_parallel_betweenness.py','../examples/graph/plot_football.py'&|" doc/conf.py
 
 %build
-%py3_build
+%py_build
 
 %install
-%py3_install
+%py_install
 mv %{buildroot}%{_docdir}/networkx-%{version} ./installed-docs
 rm -f installed-docs/INSTALL.txt
 
@@ -86,7 +96,3 @@ done
 #%%check
 #nosetests-3 -v
 
-%files -n python3-networkx
-%doc README.rst installed-docs/*
-%license LICENSE.txt
-%{python3_sitelib}/networkx*
