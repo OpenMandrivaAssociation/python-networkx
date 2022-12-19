@@ -1,14 +1,13 @@
-%global module networkx
-%global fname %(n=%{module}; echo ${n:0:1})
+%{?python_enable_dependency_generator}
 
-Name:		python-%{module}
-Version:	2.8.7
+Name:		python-networkx
+Version:	2.8.8
 Release:	1
 Summary:	Creates and Manipulates Graphs and Networks
 License:	BSD
 URL:		http://networkx.github.io/
-#Source0:	https://github.com/networkx/networkx/archive/%{module}-%{version}.tar.gz
-Source0:	https://pypi.io/packages/source/%{fname}/%{module}/%{module}-%{version}.tar.gz
+#Source0:	https://github.com/networkx/networkx/archive/networkx-%{version}.tar.gz
+Source0:	https://pypi.io/packages/source/n/networkx/networkx-%{version}.tar.gz
 
 BuildArch:	noarch
 
@@ -29,7 +28,7 @@ BuildRequires:	xdg-utils
 NetworkX is a Python package for the creation, manipulation, and
 study of the structure, dynamics, and functions of complex networks.
 
-%package -n python3-%{module}
+%package -n python3-networkx
 Summary:	Creates and Manipulates Graphs and Networks
 Recommends:	python3dist(gdal)
 Recommends:	python3dist(lxml)
@@ -39,9 +38,10 @@ Recommends:	python3dist(pillow)
 Recommends:	python3dist(pyparsing)
 Recommends:	python3dist(pyyaml)
 Recommends:	xdg-utils
-Provides:	python-%{module} = %{EVRD}
 
-%description -n python3-%{module}
+Provides:	python-networkx = %{EVRD}
+
+%description -n python3-networkx
 NetworkX is a Python 3 package for the creation, manipulation, and
 study of the structure, dynamics, and functions of complex networks.
 
@@ -53,7 +53,7 @@ study of the structure, dynamics, and functions of complex networks.
 #---------------------------------------------------------------------------
 
 %prep
-%autosetup -p1 -n %{module}-%{version}
+%autosetup -p1 -n networkx-%{version}
 
 # Do not use env
 for f in $(grep -FRl %{_bindir}/env .); do
