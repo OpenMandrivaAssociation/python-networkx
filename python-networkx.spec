@@ -1,51 +1,45 @@
 %{?python_enable_dependency_generator}
 
 Name:		python-networkx
-Version:	2.8.8
-Release:	2
+Version:	3.0
+Release:	1
 Summary:	Creates and Manipulates Graphs and Networks
 License:	BSD
-URL:		http://networkx.github.io/
+URL:		https://networkx.org
 #Source0:	https://github.com/networkx/networkx/archive/networkx-%{version}.tar.gz
 Source0:	https://pypi.io/packages/source/n/networkx/networkx-%{version}.tar.gz
 
 BuildArch:	noarch
 
-BuildRequires:	python3-devel
-BuildRequires:	python3dist(decorator)
-BuildRequires:	python3dist(gdal)
-BuildRequires:	python3dist(lxml)
-BuildRequires:	python3dist(matplotlib)
-BuildRequires:	python3dist(nose)
-BuildRequires:	python3dist(numpy)
-BuildRequires:	python3dist(numpydoc)
-BuildRequires:	python3dist(pillow)
-BuildRequires:	python3dist(pyyaml)
-BuildRequires:	python3dist(setuptools)
+BuildRequires:	pkgconfig(python)
+BuildRequires:	python%{py_ver}dist(decorator)
+BuildRequires:	python%{py_ver}dist(gdal)
+BuildRequires:	python%{py_ver}dist(lxml)
+BuildRequires:	python%{py_ver}dist(matplotlib)
+BuildRequires:	python%{py_ver}dist(nose)
+BuildRequires:	python%{py_ver}dist(numpy)
+BuildRequires:	python%{py_ver}dist(numpydoc)
+BuildRequires:	python%{py_ver}dist(pillow)
+BuildRequires:	python%{py_ver}dist(pyyaml)
+BuildRequires:	python%{py_ver}dist(setuptools)
 BuildRequires:	xdg-utils
-
-%description
-NetworkX is a Python package for the creation, manipulation, and
-study of the structure, dynamics, and functions of complex networks.
-
-%package -n python3-networkx
-Summary:	Creates and Manipulates Graphs and Networks
-Recommends:	python3dist(gdal)
-Recommends:	python3dist(lxml)
-Recommends:	python3dist(matplotlib)
-Recommends:	python3dist(numpy)
-Recommends:	python3dist(pillow)
-Recommends:	python3dist(pyparsing)
-Recommends:	python3dist(pyyaml)
+Recommends:	python%{py_ver}dist(gdal)
+Recommends:	python%{py_ver}dist(lxml)
+Recommends:	python%{py_ver}dist(matplotlib)
+Recommends:	python%{py_ver}dist(numpy)
+Recommends:	python%{py_ver}dist(pillow)
+Recommends:	python%{py_ver}dist(pyparsing)
+Recommends:	python%{py_ver}dist(pyyaml)
 Recommends:	xdg-utils
 
-Provides:	python-networkx = %{EVRD}
+#Provides:	python-networkx = %{EVRD}
+%rename		python3-networkx
 
-%description -n python3-networkx
+%description
 NetworkX is a Python 3 package for the creation, manipulation, and
 study of the structure, dynamics, and functions of complex networks.
 
-%files -n python3-networkx
+%files
 %doc README.rst installed-docs/*
 %license LICENSE.txt
 %{python3_sitelib}/networkx*
