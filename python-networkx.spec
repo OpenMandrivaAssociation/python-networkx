@@ -1,7 +1,7 @@
 %{?python_enable_dependency_generator}
 
 Name:		python-networkx
-Version:	3.0
+Version:	3.1
 Release:	1
 Summary:	Creates and Manipulates Graphs and Networks
 License:	BSD
