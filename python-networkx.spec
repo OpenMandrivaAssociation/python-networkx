@@ -1,7 +1,7 @@
 %{?python_enable_dependency_generator}
 
 Name:		python-networkx
-Version:	3.1
+Version:	3.2.1
 Release:	1
 Summary:	Creates and Manipulates Graphs and Networks
 License:	BSD
@@ -33,16 +33,15 @@ Recommends:	python%{py_ver}dist(pyyaml)
 Recommends:	xdg-utils
 
 #Provides:	python-networkx = %{EVRD}
-%rename		python3-networkx
 
 %description
 NetworkX is a Python 3 package for the creation, manipulation, and
 study of the structure, dynamics, and functions of complex networks.
 
 %files
-%doc README.rst installed-docs/*
+%doc README.rst
 %license LICENSE.txt
-%{python3_sitelib}/networkx*
+%{python_sitelib}/networkx*
 
 #---------------------------------------------------------------------------
 
@@ -51,7 +50,7 @@ study of the structure, dynamics, and functions of complex networks.
 
 # Do not use env
 for f in $(grep -FRl %{_bindir}/env .); do
-  sed -e 's,%{_bindir}/env python,%{__python3},' \
+  sed -e 's,%{_bindir}/env python,%{__python},' \
       -e 's,%{_bindir}/env ,%{_bindir},' \
       -i.orig $f
   touch -r $f.orig $f
@@ -67,8 +66,6 @@ sed -i "/expected_failing_examples/s|]|,'../examples/advanced/plot_parallel_betw
 
 %install
 %py_install
-mv %{buildroot}%{_docdir}/networkx-%{version} ./installed-docs
-rm -f installed-docs/INSTALL.txt
 
 # Repack uncompressed zip archives
 for fil in $(find doc/build -name \*.zip); do
@@ -81,7 +78,7 @@ for fil in $(find doc/build -name \*.zip); do
 done
 
 # The tests have shebangs, so mark them as executable
-#grep -rlZ '^#!' %{buildroot}%{python3_sitelib}/networkx | xargs -0 chmod a+x
+#grep -rlZ '^#!' %{buildroot}%{python_sitelib}/networkx | xargs -0 chmod a+x
 
 # Temporarily disabled until a bug in graphviz > 2.38 is fixed that causes
 # multigraphs to not work.  (Adding the same edge with multiple keys yields
