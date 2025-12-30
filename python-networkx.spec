@@ -2,7 +2,7 @@
 
 Name:		python-networkx
 Version:	3.5
-Release:	2
+Release:	3
 Summary:	Creates and Manipulates Graphs and Networks
 License:	BSD
 URL:		https://networkx.org
