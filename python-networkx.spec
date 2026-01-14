@@ -1,29 +1,31 @@
-%{?python_enable_dependency_generator}
+%define module networkx
 
 Name:		python-networkx
-Version:	3.5
-Release:	3
+Version:	3.6.1
+Release:	1
 Summary:	Creates and Manipulates Graphs and Networks
 License:	BSD
-URL:		https://networkx.org
-#Source0:	https://github.com/networkx/networkx/archive/networkx-%{version}.tar.gz
-Source0:	https://pypi.io/packages/source/n/networkx/networkx-%{version}.tar.gz
-
+URL:		https://github.com/networkx/networkx
+Source0:	%{URL}/archive/%{module}-%{version}/%{module}-%{version}.tar.gz#/%{name}-%{version}.tar.gz
+BuildSystem:  python
 BuildArch:	noarch
-
 BuildRequires:	pkgconfig(python)
+BuildRequires:	python-gdal
 BuildRequires:	python%{py_ver}dist(decorator)
-BuildRequires:	python%{py_ver}dist(gdal)
 BuildRequires:	python%{py_ver}dist(lxml)
 BuildRequires:	python%{py_ver}dist(matplotlib)
 BuildRequires:	python%{py_ver}dist(nose)
+BuildRequires:	python%{py_ver}dist(pip)
 BuildRequires:	python%{py_ver}dist(numpy)
-BuildRequires:	python%{py_ver}dist(numpydoc)
+BuildRequires:	python%{py_ver}dist(pandas)
+BuildRequires:	python%{py_ver}dist(numpy)
 BuildRequires:	python%{py_ver}dist(pillow)
 BuildRequires:	python%{py_ver}dist(pyyaml)
+BuildRequires:	python%{py_ver}dist(scipy)
 BuildRequires:	python%{py_ver}dist(setuptools)
+BuildRequires:	python%{py_ver}dist(wheel)
 BuildRequires:	xdg-utils
-Recommends:	python%{py_ver}dist(gdal)
+Recommends:	python-gdal
 Recommends:	python%{py_ver}dist(lxml)
 Recommends:	python%{py_ver}dist(matplotlib)
 Recommends:	python%{py_ver}dist(numpy)
@@ -41,12 +43,13 @@ study of the structure, dynamics, and functions of complex networks.
 %files
 %doc README.rst
 %license LICENSE.txt
-%{python_sitelib}/networkx*
+%{python_sitelib}/%{module}
+%{python_sitelib}/%{module}-%{version}.dist-info
 
 #---------------------------------------------------------------------------
 
 %prep
-%autosetup -p1 -n networkx-%{version}
+%autosetup -p1 -n %{module}-%{module}-%{version}
 
 # Do not use env
 for f in $(grep -FRl %{_bindir}/env .); do
